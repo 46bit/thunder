@@ -55,7 +55,7 @@ type EnumValue struct {
 	Name              string
 	Description       string
 	IsDeprecated      bool
-	DeprecationReason string
+	DeprecationReason *string
 }
 
 func (s *introspection) registerEnumValue(schema *schemabuilder.Schema) {
@@ -223,7 +223,7 @@ func (s *introspection) registerType(schema *schemabuilder.Schema) {
 			for k, v := range t.ReverseMap {
 				val := fmt.Sprintf("%v", k)
 				enumVals = append(enumVals,
-					EnumValue{Name: v, Description: val, IsDeprecated: false, DeprecationReason: ""})
+					EnumValue{Name: v, Description: val, IsDeprecated: false, DeprecationReason: nil})
 			}
 			sort.Slice(enumVals, func(i, j int) bool { return enumVals[i].Name < enumVals[j].Name })
 			return enumVals
@@ -238,7 +238,7 @@ type field struct {
 	Args              []InputValue
 	Type              Type
 	IsDeprecated      bool
-	DeprecationReason string
+	DeprecationReason *string
 }
 
 func (s *introspection) registerField(schema *schemabuilder.Schema) {
